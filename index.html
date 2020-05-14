@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+</head>
+<body>
+    <form action="" class="dFlex-fdCol">
+        <div id="selectDiv" class="dFlex-fdCol">
+            <label for="selectAnimal">Looking For:</label>
+            <select name="selectAnimal" id="">
+                <option value="cat">Cat</option>
+                <option value="dog">Dog</option>
+            </select>
+            <button id="selectButton" class="form-button nextButton">NEXT<i class="fas fa-chevron-circle-right"></i></button>
+        </div>
+        <div id="otherDiv">
+            <label>Needs to be Good With:</label>
+            <div class="dFlex-fdCol goodWithDiv"> 
+                <input type="checkbox" name="otherDogs" id="">
+                <label for="otherDogs" class="goodWithLabel">Other Dogs</label>
+                <input type="checkbox" name="otherCats" id="">
+                <label for="otherCats" class="goodWithLabel">Other Cats</label>
+                <input type="checkbox" name="otherKids" id="">
+                <label for="otherKids" class="goodWithLabel">Other Kids</label>
+            </div>
+            <button id="selectButton" class="form-button nextButton">NEXT<i class="fas fa-chevron-circle-right"></i></button>
+        </div>
+        <div id="zipDiv">
+            <label for="zipInput">Zip Code:</label>
+            <div>
+                <input class="input" name="zipInput" type="text" placeholder="">
+            </div>
+            <button id="zipButton" class="form-button nextButton">NEXT<i class="fas fa-chevron-circle-right"></i></button>
+        </div>
+    </form>
+</body>
+</html>
