@@ -29,24 +29,22 @@ form {
     color: white;
     height: 100%;
     width: 50%;
-    margin: auto auto;
+    margin: 0 auto;
     justify-content: center;
     align-items: center;
     text-align: center;
-}
-
-form * {
-    margin: .5em 0;
 }
 
 input {
     padding: 1em;
     border: 1px solid white;
     border-radius: 15px;
+    margin-bottom: 1rem;
 }
 
 label {
     font-size: 1.5rem;
+    margin-bottom: 1rem;
 }
 
 .dFlex-fdCol {
@@ -54,8 +52,8 @@ label {
     flex-direction: column;
 }
 
-select {    
-    margin-bottom: 1em;
+select {
+    margin-bottom: 1rem;
     padding: 1em;
     width: 100%;
     border: none;
@@ -93,4 +91,9 @@ select {
 
 .goodWithDiv > label {
     font-size: .9em;
+    margin: 1rem 0;
+}
+
+.zipDiv label {
+    margin-bottom: 1rem;
 }
