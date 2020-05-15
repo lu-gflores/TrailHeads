@@ -26,12 +26,13 @@ $(document).ready(function () {
 
 
 
-    function getTrails(){
+    function getTrails(a, b){
 
         $.ajax({
-            url: 'https://www.hikingproject.com/data/get-trails?lat=35.9705&lon=-79.9974&maxDistance=10&key=200758271-3165bfaa7d6b0bedfbf0fcdfbad4ec16',
+            url: "https://www.hikingproject.com/data/get-trails?lat=" + a + "&lon=" + b +"&maxDistance=10&key=200758271-3165bfaa7d6b0bedfbf0fcdfbad4ec16",
             method: 'GET'
         }).then(function(response){
+            console.log(response.trails[0])
             $('#trail1').attr('src',response.trails[0].imgSmallMed)
             $('#trail2').attr('src',response.trails[1].imgSmallMed)
             $('#trail3').attr('src',response.trails[2].imgSmallMed)
@@ -41,44 +42,33 @@ $(document).ready(function () {
     })
     }
 
-getTrails();
+
 
 
 // ----Weather API for retrieving longitude and latitude
-
-function trailLocation(trailName) {
+// var lat = "";
+// var long = "";
+function cityLocation(cityName) {
 
     var locationAPIKey = "&appid=0888bb26c1d027c60cb2417244156801";
-    var locationURL = "https://api.openweathermap.org/data/2.5/weather?q=" + trailName + locationAPIKey;
+    var locationURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + locationAPIKey;
     $.ajax ({
         url: locationURL,
         method: "GET"
     }).then(function(response) {
+       
         var long = response.coord.lon;
-        var lat =response.coord.lat;
-        console.log(response);
-        
+        var lat = response.coord.lat;
+        console.log(lat)
+
         var divEl = $("<div>").addClass("coordinates")
         var locationLon = $("<p>").text("Longitude: " + long);
         var locationLat = $("<p>").text("Latitude: " + lat);
     
         divEl.append(locationLon, locationLat);
+        getTrails(lat, long);
     })
+}   
 
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    cityLocation("Charlotte")
 })
