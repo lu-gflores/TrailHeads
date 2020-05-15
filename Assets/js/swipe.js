@@ -25,7 +25,7 @@ $(document).ready(function () {
     })
 
 
-
+// ----trail finder API
     function getTrails(a, b){
 
         $.ajax({
@@ -42,16 +42,12 @@ $(document).ready(function () {
     })
     }
 
-
-
-
 // ----Weather API for retrieving longitude and latitude
-// var lat = "";
-// var long = "";
 function cityLocation(cityName) {
 
     var locationAPIKey = "&appid=0888bb26c1d027c60cb2417244156801";
     var locationURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + locationAPIKey;
+
     $.ajax ({
         url: locationURL,
         method: "GET"
@@ -59,16 +55,16 @@ function cityLocation(cityName) {
        
         var long = response.coord.lon;
         var lat = response.coord.lat;
-        console.log(lat)
-
+        console.log(lat);
+        console.log(long);
         var divEl = $("<div>").addClass("coordinates")
         var locationLon = $("<p>").text("Longitude: " + long);
         var locationLat = $("<p>").text("Latitude: " + lat);
     
         divEl.append(locationLon, locationLat);
-        getTrails(lat, long);
+        getTrails(lat, long); //passing longitude and latitude parameters to getTrails
     })
 }   
 
-    cityLocation("Charlotte")
+    //cityLocation("Charlotte") testing
 })
