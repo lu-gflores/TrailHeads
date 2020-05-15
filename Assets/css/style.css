@@ -1,0 +1,38 @@
+.swiper-container {
+    height: 100%;
+    width: 100%
+}
+.swiper-slide{
+    background-color:lightblue;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.swiper-pagination-bullet{
+    background-color:rosybrown;
+}
+.swiper-button-next{
+    color:purple;
+}
+.swiper-button-prev{
+    color:purple;
+}
+.pet-img{
+    width: 100%;
+    height:50%;
+}
+.fa-heart{
+    color: rgb(189, 30, 104);
+}
+.fa-times-circle{
+    color:Red
+}
+.save-pet{
+    background-color: lightblue;
+    border: hidden;
+}
+.clear-pet{
+    background-color: lightblue;
+    border: hidden;
+}
