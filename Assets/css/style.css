@@ -36,3 +36,13 @@
     background-color: lightblue;
     border: hidden;
 }
+
+.fas {
+    color: #38b2ac;
+}
+
+.iconContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
