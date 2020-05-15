@@ -37,7 +37,7 @@ $(document).ready(function () {
             $('#trail3').attr('src',response.trails[2].imgSmallMed)
             $('#trail4').attr('src',response.trails[3].imgSmallMed)
             $('#trail5').attr('src',response.trails[4].imgSmallMed)
-            
+            $('#trail6').attr('src',response.trails[5].imgSmallMed)
     })
     }
 
