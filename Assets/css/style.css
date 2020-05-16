@@ -46,3 +46,8 @@
     display: flex;
     justify-content: center;
 }
+
+.container {
+    display: grid;
+    place-items: center;
+}
