@@ -51,3 +51,7 @@
     display: grid;
     place-items: center;
 }
+
+.heart {
+    color: white;
+}
