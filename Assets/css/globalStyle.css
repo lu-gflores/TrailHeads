@@ -1,0 +1,26 @@
+:root {
+    --darker-pink: #eb6383;
+    --light-orange: #fa9191;
+    --light-yellow: #ffe9c5;
+    --main-light-green: #b4f2e1;
+    --main-dark: #333;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-family: "Open Sans", sans-serif;
+    font-size: 30px;
+}
+
+body {
+    height: 100vh;
+    width: 100%;
+    background: linear-gradient(var(--light-orange), var(--light-yellow));
+}
