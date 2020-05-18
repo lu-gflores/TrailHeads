@@ -1,4 +1,5 @@
 $(document).ready(function () {
+  $("nav").hide();
   var mySwiper = new Swiper('.swiper-container', {
       loop: true,
       effect: 'coverflow',
@@ -25,16 +26,16 @@ $(document).ready(function () {
   })
   function generateExplorer() {
   }
-//saved trails
+  //saved trails
   function generateSaved() {
   }
-// ----hiking project API
-  function getTrails(a, b){
+  // ----hiking project API
+  function getTrails(a, b, distance, weather){
       $.ajax({
-          url: "https://www.hikingproject.com/data/get-trails?lat=" + a + "&lon=" + b +"&maxDistance=10&key=200758271-3165bfaa7d6b0bedfbf0fcdfbad4ec16",
+          url: "https://www.hikingproject.com/data/get-trails?lat=" + a + "&lon=" + b +"&maxDistance=" + distance + "&key=200758271-3165bfaa7d6b0bedfbf0fcdfbad4ec16",
           method: 'GET'
       }).then(function(response){
-          console.log(response.trails[0])
+          console.log(response)
          //for loop?
           $('#trail1').attr('src',response.trails[0].imgSmallMed)
           $('#trail2').attr('src',response.trails[1].imgSmallMed)
@@ -66,32 +67,41 @@ $(document).ready(function () {
           cardBackground.append(divH);
           newCard.append(cardBackground);
           cardsArray.push(newCard);
-          console.log(cardsArray);
+          // console.log(cardsArray);
          }
       })
   }
-//search event listener, changing certain elements to ids soon
-var savedPages =  JSON.parse(localStorage.getItem("searches")) || []; //may put this in a function to load saved pages
-$("#search-btn").on("click", function(event) {
-  event.preventDefault();
-  var searchInput = $("input").val().trim();
-  savedPages.push(searchInput); 
-  //localStorage.setItem("searches").JSON.stringify(savedPages);
-  cityLocation(searchInput);//passing user input to cityLocation
-  //getTrails()
-})
+  //search event listener, changing certain elements to ids soon
+  var savedPages =  JSON.parse(localStorage.getItem("searches")) || []; //may put this in a function to load saved pages
+
+  $(".search-btn").on("click", function(event) {
+    event.preventDefault();
+    if($(this).siblings('.cityNameInput').val().trim()) {
+      $("nav").show();
+      $("#introFormDiv").hide();
+      var searchInputCity = $(this).siblings('.cityNameInput').val().trim();
+      var searchInputDistance = parseInt($(this).siblings('.cityDistanceInput').val().trim()) || 10;
+      console.log(searchInputCity);
+      savedPages.push(searchInputCity);
+      //localStorage.setItem("searches").JSON.stringify(savedPages);
+      cityLocation(searchInputCity, searchInputDistance);//passing user input to cityLocation
+      //getTrails()
+    }
+  })
 // ----Weather API for retrieving longitude and latitude and pass to hiking project api
-function cityLocation(cityName) {
+function cityLocation(cityName, cityDistance) {
   var locationAPIKey = "&appid=0888bb26c1d027c60cb2417244156801";
-  var locationURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + locationAPIKey;
+  var locationURL = "https://api.openweathermap.org/data/2.5/weather?units=imperial&q=" + cityName + locationAPIKey;
   $.ajax ({
       url: locationURL,
       method: "GET"
   }).then(function(response) {
       var long = response.coord.lon;
       var lat = response.coord.lat;
+      var temp = Math.round(response.main.temp)
       console.log(lat);
       console.log(long);
+      console.log(temp);
       //not needed for now, only need to pass lat & long
       /*
       var divEl = $("<div>").addClass("coordinates")
@@ -99,7 +109,7 @@ function cityLocation(cityName) {
       var locationLat = $("<p>").text("Latitude: " + lat);
       divEl.append(locationLon, locationLat);
       */
-      getTrails(lat, long); //passing longitude and latitude parameters to get trail results
+      getTrails(lat, long, cityDistance, temp); //passing longitude and latitude parameters to get trail results
   })
 }   
   //cityLocation("Charlotte");
