@@ -25,6 +25,10 @@ $(document).ready(function () {
     })
 
 
+
+
+
+
 // ----hiking project API
     function getTrails(a, b){
 
@@ -41,7 +45,7 @@ $(document).ready(function () {
             $('#trail5').attr('src',response.trails[4].imgSmallMed)
 
             //append results to cards/create new variables, subject to change.    
-           for (var i = 0; i < 5; i++){
+           for (var i = 0; i < response.trails.length; i++){
 
             //div row, may not be needed for swipe
             var divRow = $("<div>").addClass("flex flex-row justify-around my-16");
@@ -56,19 +60,33 @@ $(document).ready(function () {
             var trailName = $("<h1>").addClass("text-xl font-bold").text(response.trails[i].name);
             newCard.append(trailName);
             
-            //div sub-container for summary
+            //div sub-container for summary paragraph
             var divH = $("<div>").addClass("h-48");
             newCard.append(divH);
 
             //summary paragraph
             var trailInfo = $("<p>").text(response.trails[i].summary);
-            newCard.append(trailInfo);
+            var trailInfo2 = $("<p>").text(response.trails[i].location)
+            newCard.append(trailInfo, trailInfo2);
             
            }
           
         
     })
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -115,5 +133,5 @@ function cityLocation(cityName) {
     })
 }   
 
-    cityLocation("Charlotte");
+    //cityLocation("Charlotte");
 })
