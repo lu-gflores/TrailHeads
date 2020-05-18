@@ -26,6 +26,16 @@ $(document).ready(function () {
 
 
 
+    function generateExplorer() {
+
+
+
+
+    }
+//saved trails
+    function generateSaved() {
+
+    }
 
 
 
@@ -44,37 +54,47 @@ $(document).ready(function () {
             $('#trail4').attr('src',response.trails[3].imgSmallMed)
             $('#trail5').attr('src',response.trails[4].imgSmallMed)
 
+             //div row, may not be needed for swipe
+             var divRow = $("<div>").addClass("flex flex-row justify-around my-16");
+             $("#container").append(divRow);//added id in html
+
+             var shadowElement = $("<div>").addClass("max-w-sm rounded overflow-hidden shadow-lg");
+            $(divRow).append(shadowElement);
+
+            var cardsArray = [];//store cards generated
+
             //append results to cards/create new variables, subject to change.    
            for (var i = 0; i < response.trails.length; i++){
 
-            //div row, may not be needed for swipe
-            var divRow = $("<div>").addClass("flex flex-row justify-around my-16");
-
             var newCard = $("<div>").addClass("container flex flex-col items-center w-64 my-4");//trail card
+            divRow.append(newCard);
 
             //image 
             var imgTag = $("<img>").addClass("w-full overflow-hidden h-64 overflow-hidden").attr("src", response.trails[i].imgSmallMed);
             newCard.append(imgTag);
+
+            var cardBackground =  $("<div>").addClass("px-4 py-4 bg-white");
 
             //Trail Name
             var trailName = $("<h1>").addClass("text-xl font-bold").text(response.trails[i].name);
             newCard.append(trailName);
             
             //div sub-container for summary paragraph
-            var divH = $("<div>").addClass("h-48");
-            newCard.append(divH);
-
+             var divH = $("<div>").addClass("h-48");
+            
             //summary paragraph
             var trailInfo = $("<p>").text(response.trails[i].summary);
-            var trailInfo2 = $("<p>").text(response.trails[i].location)
-            newCard.append(trailInfo, trailInfo2);
-            
-           }
-          
-        
-    })
-    }
+            divH.append(trailName, trailInfo);
 
+            cardBackground.append(divH);
+            newCard.append(cardBackground);
+            
+            cardsArray.push(newCard);
+            console.log(cardsArray);
+           }
+           
+        })
+    }
 
 
 
@@ -94,15 +114,15 @@ $(document).ready(function () {
 //search event listener, changing certain elements to ids soon
 var savedPages =  JSON.parse(localStorage.getItem("searches")) || []; //may put this in a function to load saved pages
 
-$("button").on("click", function(event) {
+$("#search-btn").on("click", function(event) {
     event.preventDefault();
     var searchInput = $("input").val().trim();
 
     savedPages.push(searchInput); 
-    localStorage.setItem("searches").JSON.stringify(savedPages);
+    //localStorage.setItem("searches").JSON.stringify(savedPages);
 
     cityLocation(searchInput);//passing user input to cityLocation
-
+    getTrails()
 })
 
 
