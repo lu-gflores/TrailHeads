@@ -122,7 +122,7 @@ $("#search-btn").on("click", function(event) {
     //localStorage.setItem("searches").JSON.stringify(savedPages);
 
     cityLocation(searchInput);//passing user input to cityLocation
-    getTrails()
+    //getTrails()
 })
 
 
