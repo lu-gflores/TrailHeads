@@ -10,7 +10,7 @@
 
 }
 .swiper-pagination-bullet{
-    background-color:rosybrown;
+    background-color:brown;
 }
 .swiper-button-next{
     color:purple;
@@ -28,11 +28,14 @@
 .fa-times-circle{
     color:Red
 }
-.save-pet{
+.save-trail{
     background-color:lightgreen;
     border: hidden;
 }
 .clear-pet{
     background-color: lightgreen;
     border: hidden;
+}
+.no-img{
+    display:hidden;
 }
