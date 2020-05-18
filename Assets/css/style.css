@@ -36,3 +36,42 @@
     background-color: lightblue;
     border: hidden;
 }
+
+.fas {
+    color: #38b2ac;
+}
+
+.iconContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    display: grid;
+    place-items: center;
+}
+
+.icon {
+    color: white;
+    cursor: pointer;
+    transition: .2s ease-in-out;
+}
+
+.icon:hover {
+    transform: scale(1.2);
+    transition: .2s ease-in-out;
+}
+
+a {
+    transition: transform .2s ease-in-out;
+}
+
+a:hover {
+    transform: scale(1.1);
+    transition: .2s ease-in-out;
+}
+
+.logo {
+    font-family: 'Pacifico', serif;
+}
