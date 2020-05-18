@@ -33,13 +33,39 @@ $(document).ready(function () {
             method: 'GET'
         }).then(function(response){
             console.log(response.trails[0])
+           //for loop?
             $('#trail1').attr('src',response.trails[0].imgSmallMed)
             $('#trail2').attr('src',response.trails[1].imgSmallMed)
             $('#trail3').attr('src',response.trails[2].imgSmallMed)
             $('#trail4').attr('src',response.trails[3].imgSmallMed)
             $('#trail5').attr('src',response.trails[4].imgSmallMed)
 
-            //append results to cards?
+            //append results to cards/create new variables, subject to change.    
+           for (var i = 0; i < 5; i++){
+
+            //div row, may not be needed for swipe
+            var divRow = $("<div>").addClass("flex flex-row justify-around my-16");
+
+            var newCard = $("<div>").addClass("container flex flex-col items-center w-64 my-4");//trail card
+
+            //image 
+            var imgTag = $("<img>").addClass("w-full overflow-hidden h-64 overflow-hidden").attr("src", response.trails[i].imgSmallMed);
+            newCard.append(imgTag);
+
+            //Trail Name
+            var trailName = $("<h1>").addClass("text-xl font-bold").text(response.trails[i].name);
+            newCard.append(trailName);
+            
+            //div sub-container for summary
+            var divH = $("<div>").addClass("h-48");
+            newCard.append(divH);
+
+            //summary paragraph
+            var trailInfo = $("<p>").text(response.trails[i].summary);
+            newCard.append(trailInfo);
+            
+           }
+          
         
     })
     }
@@ -89,5 +115,5 @@ function cityLocation(cityName) {
     })
 }   
 
-    //cityLocation("Charlotte") testing
+    cityLocation("Charlotte");
 })
