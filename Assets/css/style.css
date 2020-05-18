@@ -52,10 +52,22 @@
     place-items: center;
 }
 
-.heart {
+.icon {
     color: white;
+    cursor: pointer;
+    transition: .2s ease-in-out;
 }
 
-.logo {
-    color: white;
+i:hover {
+    transform: scale(1.2);
+    transition: .2s ease-in-out;
+}
+
+a {
+    transition: transform .2s ease-in-out;
+}
+
+a:hover {
+    transform: scale(1.1);
+    transition: .2s ease-in-out;
 }

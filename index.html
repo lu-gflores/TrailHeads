@@ -15,11 +15,11 @@
 
 <body class="w-full h-screen bg-gray-100 flex flex-col">
     <!-- NAVBAR -->
-    <nav class="w-full flex items-center mx-auto flex-wrap p-6 h-16 text-center">
+    <nav class="w-full flex items-center mx-auto flex-wrap h-16 text-center">
         <!-- <div class="flex items-center flex-shrink-0 text-white mr-6">
             <span class="font-semibold text-xl tracking-tight">Trail Finder</span>
         </div> -->
-        <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
+        <div class="w-full block flex items-center w-auto">
             <div class="text-sm lg:flex-grow">
                 <a href="" class="block mt-4 lg:inline-block lg:mt-0 text-teal-600 hover:text-teal-400 text-xl mx-4">
                     Explore
@@ -27,6 +27,12 @@
                 <a href="" class="block mt-4 lg:inline-block lg:mt-0 text-teal-600 hover:text-teal-400 text-xl mx-4">
                     Saved
                 </a>
+            </div>
+            <div class="flex border-b border-b-2 border-teal-500 py-2 mx-auto absolute right-0 mr-16">
+                <input class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" type="text" placeholder="Search Cities" aria-label="City name">
+                <button class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded" type="button">
+                Search
+                </button>
             </div>
         </div>
     </nav>
@@ -54,7 +60,7 @@
     </div> -->
 
     <!-- SAVED PAGES -->
-    <div class="flex mx-auto flex-col w-10/12">
+    <!-- <div class="flex mx-auto flex-col w-10/12">
         <h1 class="text-5xl text-center text-teal-600">Saved Trails</h1>
         <hr>
         <div class="flex flex-row justify-around my-16">
@@ -69,52 +75,16 @@
                     </div>
                 </div>
                 <div class="w-full h-16 bg-gray-300 flex flex-row">
-                    <div class="w-2/4 h-full flex justify-center items-center bg-blue-300 rounded-bl">
-                        <i class="heart fas fa-ban fa-2x"></i>
+                    <div class="icon w-2/4 h-full flex justify-center items-center bg-blue-300 rounded-bl">
+                        <i class="icon fas fa-ban fa-2x"></i>
                     </div>
-                    <div class="w-2/4 h-full flex justify-center items-center bg-red-500 rounded-br">
-                        <i class="heart fas fa-map fa-2x"></i>
-                    </div>
-                </div>
-            </div>
-
-            <div class="container flex flex-col items-center w-64 my-4">
-                <div class="max-w-sm rounded overflow-hidden shadow-lg">
-                    <img src="https://source.unsplash.com/random" alt="" class="w-full overflow-hidden h-64 overflow-hidden">
-                    <div class="px-6 py-4 bg-white">
-                        <h1 class="text-xl font-bold">Title</h1>
-                        <div class="h-48">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam distinctio, quia id, voluptatum repudiandae, tempore possimus suscipit ea molestiae tempora magni accusamus commodi?</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="container flex flex-col items-center w-64 my-4">
-                <div class="max-w-sm rounded overflow-hidden shadow-lg">
-                    <img src="https://source.unsplash.com/random" alt="" class="w-full overflow-hidden h-64 overflow-hidden">
-                    <div class="px-6 py-4 bg-white">
-                        <h1 class="text-xl font-bold">Title</h1>
-                        <div class="h-48">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam distinctio, quia id, voluptatum repudiandae, tempore possimus suscipit ea molestiae tempora magni accusamus commodi?</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="container flex flex-col items-center w-64 my-4">
-                <div class="max-w-sm rounded overflow-hidden shadow-lg">
-                    <img src="https://source.unsplash.com/random" alt="" class="w-full overflow-hidden h-64 overflow-hidden">
-                    <div class="px-6 py-4 bg-white">
-                        <h1 class="text-xl font-bold">Title</h1>
-                        <div class="h-48">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam distinctio, quia id, voluptatum repudiandae, tempore possimus suscipit ea molestiae tempora magni accusamus commodi?</p>
-                        </div>
+                    <div class="icon w-2/4 h-full flex justify-center items-center bg-red-500 rounded-br">
+                        <i class="icon fas fa-map fa-2x"></i>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- THESE ARE THE CARDS TO SWIPE ON -->
     <!-- <div class="container shadow-lg flex flex-col items-center w-64 m-4">
@@ -129,14 +99,13 @@
         </div>
         <div class="w-full h-16 bg-gray-300 flex flex-row">
             <div class="heart w-2/4 h-full flex justify-center items-center bg-blue-300 rounded-bl">
-                <i class="heart fas fa-heart-broken fa-2x"></i>
+                <i class="icon fas fa-heart-broken fa-2x"></i>
             </div>
             <div class="heart w-2/4 h-full flex justify-center items-center bg-red-500 rounded-br">
-                <i class="heart fas fa-heart fa-2x"></i>
+                <i class="icon fas fa-heart fa-2x"></i>
             </div>
         </div>
     </div> -->
-
 
     <script src="https://unpkg.com/swiper/js/swiper.js"></script>
     <script src="https://unpkg.com/swiper/js/swiper.min.js"></script>
