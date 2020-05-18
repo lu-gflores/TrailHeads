@@ -75,3 +75,7 @@ a:hover {
 .logo {
     font-family: 'Pacifico', serif;
 }
+
+nav {
+    display: none;
+}
