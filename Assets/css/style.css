@@ -58,7 +58,7 @@
     transition: .2s ease-in-out;
 }
 
-i:hover {
+.icon:hover {
     transform: scale(1.2);
     transition: .2s ease-in-out;
 }
@@ -70,4 +70,8 @@ a {
 a:hover {
     transform: scale(1.1);
     transition: .2s ease-in-out;
+}
+
+.logo {
+    font-family: 'Pacifico', serif;
 }
