@@ -8,6 +8,8 @@ $(document).ready(function () {
   function generateExplorer(response) {
     $(".swiper-button-next").show();
     $(".swiper-button-prev").show();
+    $("#savedPagesDiv").hide();
+    $("#explorerDiv").show();
     //div row, may not be needed for swipe
     var divRow = $("<div>").addClass("flex flex-row justify-around my-16");
     $("#container").append(divRow);//added id in html
@@ -24,15 +26,29 @@ $(document).ready(function () {
       var newCard = $("<div>").addClass("container flex flex-col items-center w-64 my-4");//trail card
       divRow.append(newCard);
       //image 
-      if (response.trails[i].imgSmallMed === '') {
-        $('#slide' + i).html('<img src= "https://via.placeholder.com/150" alt = "no image">')
-      } else {
-        var imgTag = $("<img>").addClass("w-full overflow-hidden h-64 overflow-hidden").attr("src", response.trails[i].imgSmallMed);
-        newCard.append(imgTag);
-      }
+      var imgTag = $("<img>").addClass("w-full overflow-hidden h-64 overflow-hidden");
+      if (response.trails[i].imgSmallMed === "") {
 
+       imgTag.attr("src", "https://via.placeholder.com/150", "alt", "no image");
       
+      } else {
+        imgTag.attr("src", response.trails[i].imgSmallMed , "alt", response.trails[i].name);
+       
+      }
+      newCard.append(imgTag);
+      //saved buttons
+      var buttonRow = $("<div class= 'w-full h-16 bg-gray-300 flex flex-row'>")
+      var buttonContainer = $('<div class="w-2/4 h-full flex justify-center items-center bg-blue-300 rounded-bl">');
+      buttonRow.append(buttonContainer);
+      
+      var brokenHeart = $('<i class="icon fas fa-heart-broken fa-2x">');
 
+      var container2 = $('<div class="w-2/4 h-full flex justify-center items-center bg-red-500 rounded-br">');
+      container2.appendTo(buttonRow);
+
+      var heart =$('<i class="icon fas fa-heart fa-2x">');
+      container2.append(heart);
+      buttonContainer.append(brokenHeart);
 
       var cardBackground = $("<div>").addClass("px-4 py-4 bg-white");
       //Trail Name
@@ -46,6 +62,8 @@ $(document).ready(function () {
       cardBackground.append(divH);
       newCard.append(cardBackground);
       $("#slide" + i).append(divSlide);
+      
+      newCard.append(buttonRow);
 
       divSlide.append(newCard);
       //cardsArray.push(newCard);
