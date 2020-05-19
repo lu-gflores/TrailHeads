@@ -1,9 +1,8 @@
 .swiper-container {
-    height: 100%;
-    width: 100%
+    height: 400px;
+    width: 400px
 }
 .swiper-slide{
-    background-color:lightblue;
     display:flex;
     justify-content: center;
     align-items: center;
@@ -13,10 +12,10 @@
     background-color:rosybrown;
 }
 .swiper-button-next{
-    color:purple;
+    color: #38b2ac;
 }
 .swiper-button-prev{
-    color:purple;
+    color: #38b2ac;
 }
 .pet-img{
     width: 100%;
