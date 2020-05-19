@@ -22,10 +22,10 @@
         </div>
         <div class="w-full block flex items-center w-auto">
             <div class="text-sm flex flex-row mx-auto">
-                <a href="" class="block mt-4 lg:mt-0 text-teal-600 hover:text-teal-400 text-xl mx-4">
+                <a href="" class="block mt-4 lg:mt-0 text-teal-600 hover:text-teal-400 text-xl mx-4" id="explorerNav">
                     Explore
                 </a>
-                <a href="" class="block mt-4 lg:mt-0 text-teal-600 hover:text-teal-400 text-xl mx-4">
+                <a href="#" class="block mt-4 lg:mt-0 text-teal-600 hover:text-teal-400 text-xl mx-4" id="savedNav">
                     Saved
                 </a>
             </div>
@@ -76,16 +76,26 @@
         </div>
     </div>
 
-
-    <div class="swiper-container" id="swiper">
-        <!-- Additional required wrapper -->
-        <div class="swiper-wrapper">
-
-
+    <div class="explorer" id="explorerDiv">
+        <div class="swiper-container" id="swiper">
+            <!-- Additional required wrapper -->
+            <div class="swiper-wrapper">
+    
+    
+            </div>
+            <!-- If we need pagination -->
+            <div class="swiper-pagination"></div>
+    
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+    
         </div>
-        <!-- If we need pagination -->
-        <div class="swiper-pagination"></div>
+    </div>
 
+    <div id="savedPagesDiv">
+        <main class="flex h-screen justify-center object-center grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 m-8" id="container">
+
+        </main>
     </div>
 
 

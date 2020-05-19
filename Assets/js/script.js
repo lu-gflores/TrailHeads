@@ -1,31 +1,13 @@
 $(document).ready(function () {
   $("nav").hide();
-  var mySwiper = new Swiper('.swiper-container', {
-    loop: true,
-    effect: 'coverflow',
-    grabCursor: true,
-    centeredSlides: true,
-    slidesPerView: '2',
-    coverflowEffect: {
-      rotate: 50,
-      stretch: 0,
-      depth: 100,
-      modifier: 1,
-      slideShadows: true,
-    },
-    pagination: {
-      el: '.swiper-pagination',
-    },
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
-    },
-    scrollbar: {
-      el: '.swiper-scrollbar',
-    }
-  })
-
+  $(".swiper-button-next").hide();
+  $(".swiper-button-prev").hide();
+  $("#explorerDiv").hide();
+  $("#savedPagesDiv").hide();
+  
   function generateExplorer(response) {
+    $(".swiper-button-next").show();
+    $(".swiper-button-prev").show();
     //div row, may not be needed for swipe
     var divRow = $("<div>").addClass("flex flex-row justify-around my-16");
     $("#container").append(divRow);//added id in html
@@ -67,12 +49,12 @@ $(document).ready(function () {
 
       divSlide.append(newCard);
       //cardsArray.push(newCard);
+      
+      initSwiper();
     }
   }
 
-  $('#slide').click(function () {
-    cityLocation('Charlotte')
-
+  function initSwiper() {
     var mySwiper = new Swiper('.swiper-container', {
 
       loop: true,
@@ -84,14 +66,10 @@ $(document).ready(function () {
       navigation: {
         nextEl: '.swiper-button-next',
         prevEl: '.swiper-button-prev',
-      },
-
-      // And if we need scrollbar
-      scrollbar: {
-        el: '.swiper-scrollbar',
-      },
+      }
     })
-  })
+  }
+
 
   //saved trails
   function generateSaved() {
@@ -155,5 +133,15 @@ $(document).ready(function () {
   $(document).on("click", ".mapIcon", function () {
     var place = $(this).attr("data-name").replace(" ", "+");
     window.open("https://www.google.com/maps/search/?api=1&query=" + place)
+  })
+
+  $(document).on("click", "#explorerNav", function() {
+    $("#explorerDiv").show();
+    $("#savedPagesDiv").hide();
+  })
+
+  $(document).on("click", "#savedNav", function() {
+    $("#savedPagesDiv").show();
+    $("#explorerDiv").hide();
   })
 });
