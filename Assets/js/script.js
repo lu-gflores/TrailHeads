@@ -5,7 +5,7 @@ $(document).ready(function () {
   $("#explorerDiv").hide();
   $("#savedPagesDiv").hide();
   
-  function generateExplorer(response) {
+  function generateExplorer(response , weather) {
     $(".swiper-button-next").show();
     $(".swiper-button-prev").show();
     $("#savedPagesDiv").hide();
@@ -16,8 +16,10 @@ $(document).ready(function () {
     var shadowElement = $("<div>").addClass("max-w-sm rounded overflow-hidden shadow-lg");
     $(divRow).append(shadowElement);
     var cardsArray = [];//store cards generated
-    //append results to cards/create new variables, subject to change.    
+    //append results to cards/create new variables, subject to change.
+
     for (var i = 0; i < response.trails.length; i++) {
+
       var divSlide = $('<div class="swiper-slide" id="slide">' + i);
 
       $(".swiper-wrapper").append(divSlide);
@@ -43,11 +45,16 @@ $(document).ready(function () {
       
       var brokenHeart = $('<i class="icon fas fa-heart-broken fa-2x">');
 
-      var container2 = $('<div class="w-2/4 h-full flex justify-center items-center bg-red-500 rounded-br">');
+      var container2 = $('<div class="w-2/4 h-full flex justify-center items-center bg-red-500 rounded-br saveMaryPoppins">');
       container2.appendTo(buttonRow);
+      
 
+      
       var heart =$('<i class="icon fas fa-heart fa-2x">');
-      container2.append(heart);
+      container2.attr("data-id", response.trails[i].id).append(heart);
+
+      console.log(response.trails[i]);
+      
       buttonContainer.append(brokenHeart);
 
       var cardBackground = $("<div>").addClass("px-4 py-4 bg-white");
@@ -72,6 +79,17 @@ $(document).ready(function () {
     }
   }
 
+var savedTrails = JSON.parse(localStorage.getItem("trails")) || []; //saved array of trails 
+
+$(document).on("click",".saveMaryPoppins", function() {
+  if(!savedTrails.includes($(this).attr("data-id"))) {
+
+   savedTrails.push($(this).attr("data-id"));
+   localStorage.setItem("trails", savedTrails);
+  }
+}) 
+
+
   function initSwiper() {
     var mySwiper = new Swiper('.swiper-container', {
 
@@ -91,7 +109,67 @@ $(document).ready(function () {
 
   //saved trails
   function generateSaved() {
-
+    
+      var getStorage = JSON.parse(localStorage.getItem('trails'));
+  
+      // For debugging purposes - uncomment out if you want to see the underlying data
+      //console.log(getStorage);
+  
+      // We haven't set any favorites yet. Tell them to go do that!
+      if (getStorage === null)
+      {
+        var h1El = $("<h1>");
+        h1El.html("<br>No favorite trails found. Click <a href='#index.html'><u>here</u></a> to go find some!");
+        h1El.attr("class", "text-center text-3xl");
+        $("header").append(h1El);
+        return;
+      }
+  
+      // We have favorite data. Time to parse it out!
+      $.each (getStorage, function() {
+  
+        // For debugging purposes - uncomment out if you want to see the underlying data
+        //console.log($(this));
+        
+        // Step 1: Create a new div
+        var newDiv = $("<div>");
+        newDiv.attr("class", "max-w-sm rounded text-overflow shadow-lg");
+  
+        // Step 2: Create a new image
+        var newImg = $("<img>");
+        newImg.attr("class", "w-full");
+        console.log(this.imgSmallMed);
+        if (this.imgSmallMed === "") {
+          newImg.attr("src", "https://images.pexels.com/photos/1578750/pexels-photo-1578750.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500");
+          newImg.attr("alt", "Placeholder image");
+          newImg.attr("style", "width: 400px; height: 300px");
+        }
+        else {
+        newImg.attr("src", this.imgSmallMed);
+        newImg.attr("alt", this.location);
+        }
+  
+        // Step 3: Create a new div to contain the location/summary
+        var newDiv2 = $("<div>");
+        newDiv2.attr("class", "px-6 py-4");
+  
+        // Step 4: Create another new div to first contain the location
+        var newDiv3 = $("<div>");
+        newDiv3.attr("class", "font-bold text-xl mb-2");
+        newDiv3.text(this.location);
+  
+        // Step 5: Create a new p for summary
+        var newP = $("<p>");
+        newP.text(this.summary);
+        newP.attr("class", "text-gray-700 text-base");
+  
+        // Final step: bring it all together
+        $("#container").append(newDiv);
+        $(newDiv).append(newImg);
+        $(newDiv).append(newDiv2);
+        $(newDiv2).append(newDiv3);
+        $(newDiv2).append(newP);
+      })
 
   }
   // ----hiking project API
@@ -102,7 +180,7 @@ $(document).ready(function () {
     }).then(function (response) {
 
       localStorage.setItem("currentSearch", JSON.stringify(response));
-      generateExplorer(response);
+      generateExplorer(response, weather);
     }
     )
   }
