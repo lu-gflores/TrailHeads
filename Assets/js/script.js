@@ -196,10 +196,11 @@ $(document).on("click",".saveMaryPoppins", function() {
   
         // Step 9: Create another div within containing the map button
         var newMapButton = $("<div>");
-        newMapButton.attr("class", "mapIcon w-2/4 h-full flex justify-center items-center bg-green-500 rounded-br");
-  
+        newMapButton.attr("class", "w-2/4 h-full flex justify-center items-center bg-green-500 rounded-br");
+        
         var newMapIcon = $("<i>");
         newMapIcon.attr("class", "mapIcon icon fas fa-map fa-2x");
+        newMapIcon.attr("data-name", response.trails[i].name)
   
         // Final step: bring it all together
         $("#container").append(newCard);
@@ -277,8 +278,8 @@ $(document).on("click",".saveMaryPoppins", function() {
   })
   //When you click on a map icon it reads the data-name attribute and opens a window with a google map to that place
   $(document).on("click", ".mapIcon", function () {
-    var place = $(this).attr("data-name").replace(" ", "+");
-    window.open("https://www.google.com/maps/search/?api=1&query=" + place)
+    var place = $(this).attr("data-name");
+    window.open("https://www.google.com/maps/search/?api=1&query=" + place);
   })
 
   $(document).on("click", "#explorerNav", function() {
