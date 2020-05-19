@@ -6,6 +6,14 @@ Trail Finder is an application designed to help hikers and travelers find their 
 
 ![Image of the MainScreen](screenshot) <br/>
 
+## User Story 
+ ```
+AS A hiker
+I WANT TO  
+SO THAT
+ ```
+
+
 
 ## Resources Used
 [Hiking Project Data API](https://www.hikingproject.com/data) <br/>
