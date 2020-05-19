@@ -5,7 +5,7 @@ $(document).ready(function () {
   $("#explorerDiv").hide();
   $("#savedPagesDiv").hide();
   
-  function generateExplorer(response) {
+  function generateExplorer(response , weather) {
     $(".swiper-button-next").show();
     $(".swiper-button-prev").show();
     $("#savedPagesDiv").hide();
@@ -16,8 +16,10 @@ $(document).ready(function () {
     var shadowElement = $("<div>").addClass("max-w-sm rounded overflow-hidden shadow-lg");
     $(divRow).append(shadowElement);
     var cardsArray = [];//store cards generated
-    //append results to cards/create new variables, subject to change.    
+    //append results to cards/create new variables, subject to change.
+
     for (var i = 0; i < response.trails.length; i++) {
+
       var divSlide = $('<div class="swiper-slide" id="slide">' + i);
 
       $(".swiper-wrapper").append(divSlide);
@@ -47,10 +49,12 @@ $(document).ready(function () {
       container2.appendTo(buttonRow);
       
 
-
+      
       var heart =$('<i class="icon fas fa-heart fa-2x">');
-      container2.attr("data-trailInfo", JSON.stringify(response.trails[i])).append(heart);
-      console.log("\"" + JSON.stringify(response.trails[i])  + "\"" );
+      container2.attr("data-id", response.trails[i].id).append(heart);
+
+      console.log(response.trails[i]);
+      
       buttonContainer.append(brokenHeart);
 
       var cardBackground = $("<div>").addClass("px-4 py-4 bg-white");
@@ -78,8 +82,11 @@ $(document).ready(function () {
 var savedTrails = JSON.parse(localStorage.getItem("trails")) || []; //saved array of trails 
 
 $(document).on("click",".saveMaryPoppins", function() {
-   savedTrails.push(JSON.parse($(this).attr("data-trailInfo")));
+  if(!savedTrails.includes($(this).attr("data-id"))) {
+
+   savedTrails.push($(this).attr("data-id"));
    localStorage.setItem("trails", savedTrails);
+  }
 }) 
 
 
@@ -173,7 +180,7 @@ $(document).on("click",".saveMaryPoppins", function() {
     }).then(function (response) {
 
       localStorage.setItem("currentSearch", JSON.stringify(response));
-      generateExplorer(response);
+      generateExplorer(response, weather);
     }
     )
   }
