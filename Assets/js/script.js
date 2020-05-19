@@ -5,7 +5,9 @@ $(document).ready(function () {
   $("#explorerDiv").hide();
   $("#savedPagesDiv").hide();
   var savedTrails; //saved array of trails 
+  var hasSearched = false; //Have you searched once
 
+  //If there are saved trails show the saved page or just start an empty array
   if(localStorage.getItem("trails")) {
     $("nav").show();
     $("#introFormDiv").hide();
@@ -211,6 +213,7 @@ $(document).ready(function () {
     })
   })
   }
+
   // ----Weather API for retrieving longitude and latitude and pass to hiking project api
   function cityLocation(cityName, cityDistance) {
     var locationAPIKey = "&appid=0888bb26c1d027c60cb2417244156801";
@@ -239,12 +242,12 @@ $(document).ready(function () {
     }
     )
   }
-  //search event listener, changing certain elements to ids soon
-  //var savedPages = JSON.parse(localStorage.getItem("searches")) || []; //may put this in a function to load saved pages
 
+  //search event listener, changing certain elements to ids soon
   $(".search-btn").on("click", function (event) {
     event.preventDefault();
     if ($(this).siblings('.cityNameInput').val().trim()) {
+      hasSearched = true;
       $("nav").show();
       $("#introFormDiv").hide();
       var searchInputCity = $(this).siblings('.cityNameInput').val().trim();
@@ -258,6 +261,7 @@ $(document).ready(function () {
     }
   })
 
+  //Push trail id into saved array when you click the heart
   $(document).on("click",".saveMaryPoppins", function() {
     if(!savedTrails.includes($(this).attr("data-id"))) {
       savedTrails.push($(this).attr("data-id"));
@@ -276,17 +280,23 @@ $(document).ready(function () {
     $("#savedPagesDiv").hide();
     $("#container").empty();
   })
+
   //When you click on a map icon it reads the data-name attribute and opens a window with a google map to that place
   $(document).on("click", ".mapIcon", function () {
     var place = $(this).attr("data-name");
     window.open("https://www.google.com/maps/search/?api=1&query=" + place);
   })
 
+  //When you click on the explorer nav button show the explorer and hide the saved page
+  //But only if you've already searched something
   $(document).on("click", "#explorerNav", function() {
-    $("#explorerDiv").show();
-    $("#savedPagesDiv").hide();
+    if(hasSearched) {
+      $("#explorerDiv").show();
+      $("#savedPagesDiv").hide();
+    }
   })
 
+  //When you click on the saved nav button show the saved page and hide the explorer
   $(document).on("click", "#savedNav", function() {
     $("#savedPagesDiv").show();
     $("#explorerDiv").hide();
@@ -294,6 +304,7 @@ $(document).ready(function () {
     generateSaved();
   })
 
+  //In the saved page when you click remove trail it removes the id out of the saved array and then generates the page again
   $(document).on("click", ".removeSaveBtn", function() {
     savedTrails.splice(savedTrails.indexOf($(this).attr("data-id")), 1);
     localStorage.setItem("trails", JSON.stringify(savedTrails));
