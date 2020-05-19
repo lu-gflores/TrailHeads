@@ -17,19 +17,19 @@
 <body class="w-full h-screen bg-gray-100 flex flex-col">
     <!-- NAVBAR -->
     <nav class="w-full flex items-center mx-auto flex-wrap h-16 text-center">
-        <div class="flex items-center flex-shrink-0 text-teal-600 mr-6 absolute ml-8">
+        <div class="flex items-center flex-shrink-0 text-teal-600 mr-6 absolute hidden md:flex lg:flex ml-8">
             <span class="text-2xl logo">Trail Finder</span>
         </div>
         <div class="w-full block flex items-center w-auto">
-            <div class="text-sm lg:flex-grow">
-                <a href="" class="block mt-4 lg:inline-block lg:mt-0 text-teal-600 hover:text-teal-400 text-xl mx-4">
+            <div class="text-sm flex flex-row mx-auto">
+                <a href="" class="block mt-4 lg:mt-0 text-teal-600 hover:text-teal-400 text-xl mx-4">
                     Explore
                 </a>
-                <a href="" class="block mt-4 lg:inline-block lg:mt-0 text-teal-600 hover:text-teal-400 text-xl mx-4">
+                <a href="" class="block mt-4 lg:mt-0 text-teal-600 hover:text-teal-400 text-xl mx-4">
                     Saved
                 </a>
             </div>
-            <div class="flex border-b border-b-2 border-teal-500 py-2 mx-auto absolute right-0 mr-16">
+            <div class="border-b border-b-2 border-teal-500 py-2 mx-auto absolute right-0 mr-16 hidden xl:flex lg:hidden md:hidden sm:hidden">
                 <input class="cityNameInput appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" type="text" placeholder="Search Cities" aria-label="City name">
                 <input class="cityDistanceInput appearance-none bg-transparent border-none w-2/4 text-gray-700 mr-0 py-1 px-2 leading-tight focus:outline-none" type="number" placeholder="Distance" aria-label="Distance from City">
                 <button class="search-btn flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded" type="submit">
@@ -51,8 +51,8 @@
                 <span class="text-4xl logo">Trail Finder</span>
             </div>
             <div class="flex border-b border-b-2 border-teal-500 py-2 mx-auto">
-                <input class="cityNameInput appearance-none bg-transparent border-none w-full text-gray-700 mr-0 py-1 px-2 leading-tight focus:outline-none" type="text" placeholder="Search Cities" aria-label="City name" autocomplete="off">
-                <input class="cityDistanceInput appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" type="number" placeholder="Distance" aria-label="Distance from City">
+                <input class="cityNameInput appearance-none bg-transparent border-none w-full text-gray-700 mr-0 py-1 leading-tight focus:outline-none" type="text" placeholder="Search Cities" aria-label="City name" autocomplete="off">
+                <input class="cityDistanceInput appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-0 leading-tight focus:outline-none text-center" type="number" placeholder="Distance" aria-label="Distance from City">
                 <button class="search-btn flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded" type="submit">
                 Search
                 </button>
@@ -81,13 +81,11 @@
                     <div class="w-2/4 h-full flex justify-center items-center bg-red-500 rounded-bl">
                         <i class="icon fas fa-ban fa-2x"></i>
                     </div>
-                    <div class="w-2/4 h-full flex justify-center items-center bg-green-500 rounded-br">
-                        <i class="icon fas fa-map fa-2x"></i>
+                    <div class="mapIcon w-2/4 h-full flex justify-center items-center bg-green-500 rounded-br" data-name="crowder's mountain">
+                        <i class="mapIcon icon fas fa-map fa-2x" data-name="crowder's mountain"></i>
                     </div>
                 </div>
             </div>
-
-        
         </div>
     </div> -->
 
