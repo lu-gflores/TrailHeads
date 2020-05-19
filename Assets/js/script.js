@@ -4,8 +4,23 @@ $(document).ready(function () {
   $(".swiper-button-prev").hide();
   $("#explorerDiv").hide();
   $("#savedPagesDiv").hide();
-  
-  function generateExplorer(response , weather) {
+  var savedTrails; //saved array of trails 
+  var hasSearched = false; //Have you searched once
+
+  //If there are saved trails show the saved page or just start an empty array
+  if(localStorage.getItem("trails")) {
+    $("nav").show();
+    $("#introFormDiv").hide();
+    $("#savedPagesDiv").show();
+    $("#explorerDiv").hide();
+    $("#container").empty();
+    savedTrails = localStorage.getItem("trails").split(",");
+    generateSaved();
+  } else {
+    savedTrails = [];
+  }
+
+  function generateExplorer(response) {
     $(".swiper-wrapper").empty();
     $(".swiper-button-next").show();
     $(".swiper-button-prev").show();
@@ -53,14 +68,14 @@ $(document).ready(function () {
       
       var heart =$('<i class="icon fas fa-heart fa-2x">');
       container2.attr("data-id", response.trails[i].id).append(heart);
-
+      
       //console.log(response.trails[i]);
       
       buttonContainer.append(brokenHeart);
 
       var cardBackground = $("<div>").addClass("px-4 py-4 bg-white");
       //Trail Name
-      var trailName = $("<h1>").addClass("text-xl font-bold").text(response.trails[i].name);
+      var trailName = $("<h1>").addClass("cardTitle text-xl font-bold").text(response.trails[i].name);
       newCard.append(trailName);
       //div sub-container for summary paragraph
       var divH = $("<div>").addClass("h-48");
@@ -70,7 +85,7 @@ $(document).ready(function () {
       cardBackground.append(divH);
       newCard.append(cardBackground);
       $("#slide" + i).append(divSlide);
-      
+    
       newCard.append(buttonRow);
 
       divSlide.append(newCard);
@@ -80,16 +95,6 @@ $(document).ready(function () {
     }
   }
 
-var savedTrails = JSON.parse(localStorage.getItem("trails")) || []; //saved array of trails 
-
-$(document).on("click",".saveMaryPoppins", function() {
-  if(!savedTrails.includes($(this).attr("data-id"))) {
-
-   savedTrails.push($(this).attr("data-id"));
-   localStorage.setItem("trails", savedTrails);
-   console.log("https://www.hikingproject.com/data/get-trails-by-id?ids="+ localStorage.getItem("trails") +"&key=200758271-3165bfaa7d6b0bedfbf0fcdfbad4ec16");
-  }
-}) 
 
 
   function initSwiper() {
@@ -111,7 +116,7 @@ $(document).on("click",".saveMaryPoppins", function() {
 
   //saved trails
   function generateSaved() {
-
+    $("#container").empty();
     $.ajax ( {
       url: "https://www.hikingproject.com/data/get-trails-by-id?ids="+ localStorage.getItem("trails") +"&key=200758271-3165bfaa7d6b0bedfbf0fcdfbad4ec16",
       method: 'GET'
@@ -171,24 +176,26 @@ $(document).on("click",".saveMaryPoppins", function() {
         var newDifficulty = $("<span>");
         newDifficulty.attr("class", "inline-block bg-gray-200 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 my-1");
         newDifficulty.text("Difficulty: " + response.trails[i].difficulty.charAt(0).toUpperCase() + response.trails[i].difficulty.substr(1));
-  
+
         // Step 7: Create yet another div to contain the buttons to delete a favorite or map the trail
         var newRow = $("<div>");
         newRow.attr("class", "w-full h-16 bg-gray-300 flex flex-row");
   
         // Step 8: Create a div within containing the unheart button
         var newButton = $("<div>");
-        newButton.attr("class", "w-2/4 h-full flex justify-center items-center bg-blue-300 rounded-bl");
+        newButton.attr("class", "removeSaveBtn w-2/4 h-full flex justify-center items-center bg-blue-300 rounded-bl");
+        newButton.attr("data-id", response.trails[i].id);
   
         var newIcon = $("<i>");
         newIcon.attr("class", "icon fas fa-heart-broken fa-2x");
   
         // Step 9: Create another div within containing the map button
         var newMapButton = $("<div>");
-        newMapButton.attr("class", "mapIcon w-2/4 h-full flex justify-center items-center bg-green-500 rounded-br");
-  
+        newMapButton.attr("class", "w-2/4 h-full flex justify-center items-center bg-green-500 rounded-br");
+        
         var newMapIcon = $("<i>");
         newMapIcon.attr("class", "mapIcon icon fas fa-map fa-2x");
+        newMapIcon.attr("data-name", response.trails[i].name)
   
         // Final step: bring it all together
         $("#container").append(newCard);
@@ -205,38 +212,7 @@ $(document).on("click",".saveMaryPoppins", function() {
         
     })
   })
-
   }
-  // ----hiking project API
-  function getTrails(a, b, distance, weather) {
-    $.ajax({
-      url: "https://www.hikingproject.com/data/get-trails?lat=" + a + "&lon=" + b + "&maxDistance=" + distance + "&key=200758271-3165bfaa7d6b0bedfbf0fcdfbad4ec16",
-      method: 'GET'
-    }).then(function (response) {
-
-      // localStorage.setItem("currentSearch", JSON.stringify(response));
-      generateExplorer(response, weather);
-    }
-    )
-  }
-  //search event listener, changing certain elements to ids soon
-  //var savedPages = JSON.parse(localStorage.getItem("searches")) || []; //may put this in a function to load saved pages
-
-  $(".search-btn").on("click", function (event) {
-    event.preventDefault();
-    if ($(this).siblings('.cityNameInput').val().trim()) {
-      $("nav").show();
-      $("#introFormDiv").hide();
-      var searchInputCity = $(this).siblings('.cityNameInput').val().trim();
-      var searchInputDistance = parseInt($(this).siblings('.cityDistanceInput').val().trim()) || 10;
-      $(this).siblings('.cityNameInput').val("");
-      $(this).siblings('.cityDistanceInput').val("");
-      //savedPages.push(searchInputCity);
-
-      cityLocation(searchInputCity, searchInputDistance);//passing user input to cityLocation
-
-    }
-  })
 
   // ----Weather API for retrieving longitude and latitude and pass to hiking project api
   function cityLocation(cityName, cityDistance) {
@@ -254,26 +230,84 @@ $(document).on("click",".saveMaryPoppins", function() {
     })
   }
 
+  // ----hiking project API
+  function getTrails(a, b, distance) {
+    $.ajax({
+      url: "https://www.hikingproject.com/data/get-trails?lat=" + a + "&lon=" + b + "&maxDistance=" + distance + "&key=200758271-3165bfaa7d6b0bedfbf0fcdfbad4ec16",
+      method: 'GET'
+    }).then(function (response) {
+
+      // localStorage.setItem("currentSearch", JSON.stringify(response));
+      generateExplorer(response);
+    }
+    )
+  }
+
+  //search event listener, changing certain elements to ids soon
+  $(".search-btn").on("click", function (event) {
+    event.preventDefault();
+    if ($(this).siblings('.cityNameInput').val().trim()) {
+      hasSearched = true;
+      $("nav").show();
+      $("#introFormDiv").hide();
+      var searchInputCity = $(this).siblings('.cityNameInput').val().trim();
+      var searchInputDistance = parseInt($(this).siblings('.cityDistanceInput').val().trim()) || 10;
+      $(this).siblings('.cityNameInput').val("");
+      $(this).siblings('.cityDistanceInput').val("");
+      //savedPages.push(searchInputCity);
+
+      cityLocation(searchInputCity, searchInputDistance);//passing user input to cityLocation
+
+    }
+  })
+
+  //Push trail id into saved array when you click the heart
+  $(document).on("click",".saveMaryPoppins", function() {
+    if(!savedTrails.includes($(this).attr("data-id"))) {
+      savedTrails.push($(this).attr("data-id"));
+      localStorage.setItem("trails", savedTrails.toString());
+      console.log("https://www.hikingproject.com/data/get-trails-by-id?ids="+ localStorage.getItem("trails") +"&key=200758271-3165bfaa7d6b0bedfbf0fcdfbad4ec16");
+    }
+  })
+
 
   //If you click on the logo do another search
   $(".logo").on("click", function () {
     $("nav").hide();
     $("#introFormDiv").show();
+    $(".swiper-wrapper").empty();
+    $("#explorerDiv").hide();
+    $("#savedPagesDiv").hide();
+    $("#container").empty();
   })
+
   //When you click on a map icon it reads the data-name attribute and opens a window with a google map to that place
   $(document).on("click", ".mapIcon", function () {
-    var place = $(this).attr("data-name").replace(" ", "+");
-    window.open("https://www.google.com/maps/search/?api=1&query=" + place)
+    var place = $(this).attr("data-name");
+    window.open("https://www.google.com/maps/search/?api=1&query=" + place);
   })
 
+  //When you click on the explorer nav button show the explorer and hide the saved page
+  //But only if you've already searched something
   $(document).on("click", "#explorerNav", function() {
-    $("#explorerDiv").show();
-    $("#savedPagesDiv").hide();
+    if(hasSearched) {
+      $("#explorerDiv").show();
+      $("#savedPagesDiv").hide();
+    }
   })
 
+  //When you click on the saved nav button show the saved page and hide the explorer
   $(document).on("click", "#savedNav", function() {
     $("#savedPagesDiv").show();
     $("#explorerDiv").hide();
+    $("#container").empty();
+    generateSaved();
+  })
+
+  //In the saved page when you click remove trail it removes the id out of the saved array and then generates the page again
+  $(document).on("click", ".removeSaveBtn", function() {
+    savedTrails.splice(savedTrails.indexOf($(this).attr("data-id")), 1);
+    localStorage.setItem("trails", JSON.stringify(savedTrails));
     generateSaved();
   })
 });
