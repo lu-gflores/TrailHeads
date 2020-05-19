@@ -4,8 +4,21 @@ $(document).ready(function () {
   $(".swiper-button-prev").hide();
   $("#explorerDiv").hide();
   $("#savedPagesDiv").hide();
-  
-  function generateExplorer(response , weather) {
+  var savedTrails; //saved array of trails 
+
+  if(localStorage.getItem("trails")) {
+    $("nav").show();
+    $("#introFormDiv").hide();
+    $("#savedPagesDiv").show();
+    $("#explorerDiv").hide();
+    $("#container").empty();
+    savedTrails = localStorage.getItem("trails").split(",");
+    generateSaved();
+  } else {
+    savedTrails = [];
+  }
+
+  function generateExplorer(response) {
     $(".swiper-wrapper").empty();
     $(".swiper-button-next").show();
     $(".swiper-button-prev").show();
@@ -80,14 +93,12 @@ $(document).ready(function () {
     }
   }
 
-var savedTrails = JSON.parse(localStorage.getItem("trails")) || []; //saved array of trails 
 
 $(document).on("click",".saveMaryPoppins", function() {
   if(!savedTrails.includes($(this).attr("data-id"))) {
-
-   savedTrails.push($(this).attr("data-id"));
-   localStorage.setItem("trails", savedTrails);
-   console.log("https://www.hikingproject.com/data/get-trails-by-id?ids="+ localStorage.getItem("trails") +"&key=200758271-3165bfaa7d6b0bedfbf0fcdfbad4ec16");
+    savedTrails.push($(this).attr("data-id"));
+    localStorage.setItem("trails", savedTrails.toString());
+    console.log("https://www.hikingproject.com/data/get-trails-by-id?ids="+ localStorage.getItem("trails") +"&key=200758271-3165bfaa7d6b0bedfbf0fcdfbad4ec16");
   }
 }) 
 
@@ -171,7 +182,7 @@ $(document).on("click",".saveMaryPoppins", function() {
         var newDifficulty = $("<span>");
         newDifficulty.attr("class", "inline-block bg-gray-200 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 my-1");
         newDifficulty.text("Difficulty: " + response.trails[i].difficulty.charAt(0).toUpperCase() + response.trails[i].difficulty.substr(1));
-  
+
         // Step 7: Create yet another div to contain the buttons to delete a favorite or map the trail
         var newRow = $("<div>");
         newRow.attr("class", "w-full h-16 bg-gray-300 flex flex-row");
@@ -205,17 +216,17 @@ $(document).on("click",".saveMaryPoppins", function() {
         
     })
   })
-
   }
+
   // ----hiking project API
-  function getTrails(a, b, distance, weather) {
+  function getTrails(a, b, distance) {
     $.ajax({
       url: "https://www.hikingproject.com/data/get-trails?lat=" + a + "&lon=" + b + "&maxDistance=" + distance + "&key=200758271-3165bfaa7d6b0bedfbf0fcdfbad4ec16",
       method: 'GET'
     }).then(function (response) {
 
       // localStorage.setItem("currentSearch", JSON.stringify(response));
-      generateExplorer(response, weather);
+      generateExplorer(response);
     }
     )
   }
@@ -259,6 +270,10 @@ $(document).on("click",".saveMaryPoppins", function() {
   $(".logo").on("click", function () {
     $("nav").hide();
     $("#introFormDiv").show();
+    $(".swiper-wrapper").empty();
+    $("#explorerDiv").hide();
+    $("#savedPagesDiv").hide();
+    $("#container").empty();
   })
   //When you click on a map icon it reads the data-name attribute and opens a window with a google map to that place
   $(document).on("click", ".mapIcon", function () {
@@ -274,6 +289,7 @@ $(document).on("click",".saveMaryPoppins", function() {
   $(document).on("click", "#savedNav", function() {
     $("#savedPagesDiv").show();
     $("#explorerDiv").hide();
+    $("#container").empty();
     generateSaved();
   })
 });
