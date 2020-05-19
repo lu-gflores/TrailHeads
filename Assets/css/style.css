@@ -74,6 +74,23 @@ a:hover {
 
 .logo {
     font-family: 'Pacifico', serif;
+    cursor: pointer;
+    transition: .2s ease-in-out;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+    transition: .2s ease-in-out;
+    color: #38b2ac;
+}
+
+.search-btn {
+    transition: .2s ease-in-out;
+}
+
+.search-btn:hover {
+    transform: scale(1.05);
+    transition: .2s ease-in-out;
 }
 
 nav {

@@ -81,7 +81,8 @@ $(document).ready(function () {
       $("#introFormDiv").hide();
       var searchInputCity = $(this).siblings('.cityNameInput').val().trim();
       var searchInputDistance = parseInt($(this).siblings('.cityDistanceInput').val().trim()) || 10;
-      console.log(searchInputCity);
+      $(this).siblings('.cityNameInput').val("");
+      $(this).siblings('.cityDistanceInput').val("");
       savedPages.push(searchInputCity);
       //localStorage.setItem("searches").JSON.stringify(savedPages);
       cityLocation(searchInputCity, searchInputDistance);//passing user input to cityLocation
@@ -113,4 +114,15 @@ function cityLocation(cityName, cityDistance) {
   })
 }   
   //cityLocation("Charlotte");
+
+  //If you click on the logo do another search
+  $(".logo").on("click", function() {
+    $("nav").hide();
+    $("#introFormDiv").show();
+  })
+  //When you click on a map icon it reads the data-name attribute and opens a window with a google map to that place
+  $(document).on("click", ".mapIcon", function() {
+    var place = $(this).attr("data-name").replace(" ", "+");
+    window.open("https://www.google.com/maps/search/?api=1&query=" + place)
+  })
 })
