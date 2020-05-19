@@ -66,14 +66,14 @@ $(document).ready(function () {
       
       var heart =$('<i class="icon fas fa-heart fa-2x">');
       container2.attr("data-id", response.trails[i].id).append(heart);
-
+      
       //console.log(response.trails[i]);
       
       buttonContainer.append(brokenHeart);
 
       var cardBackground = $("<div>").addClass("px-4 py-4 bg-white");
       //Trail Name
-      var trailName = $("<h1>").addClass("text-xl font-bold").text(response.trails[i].name);
+      var trailName = $("<h1>").addClass("cardTitle text-xl font-bold").text(response.trails[i].name);
       newCard.append(trailName);
       //div sub-container for summary paragraph
       var divH = $("<div>").addClass("h-48");
@@ -83,7 +83,7 @@ $(document).ready(function () {
       cardBackground.append(divH);
       newCard.append(cardBackground);
       $("#slide" + i).append(divSlide);
-      
+    
       newCard.append(buttonRow);
 
       divSlide.append(newCard);
@@ -93,14 +93,6 @@ $(document).ready(function () {
     }
   }
 
-
-$(document).on("click",".saveMaryPoppins", function() {
-  if(!savedTrails.includes($(this).attr("data-id"))) {
-    savedTrails.push($(this).attr("data-id"));
-    localStorage.setItem("trails", savedTrails.toString());
-    console.log("https://www.hikingproject.com/data/get-trails-by-id?ids="+ localStorage.getItem("trails") +"&key=200758271-3165bfaa7d6b0bedfbf0fcdfbad4ec16");
-  }
-}) 
 
 
   function initSwiper() {
@@ -122,7 +114,7 @@ $(document).on("click",".saveMaryPoppins", function() {
 
   //saved trails
   function generateSaved() {
-
+    $("#container").empty();
     $.ajax ( {
       url: "https://www.hikingproject.com/data/get-trails-by-id?ids="+ localStorage.getItem("trails") +"&key=200758271-3165bfaa7d6b0bedfbf0fcdfbad4ec16",
       method: 'GET'
@@ -189,7 +181,8 @@ $(document).on("click",".saveMaryPoppins", function() {
   
         // Step 8: Create a div within containing the unheart button
         var newButton = $("<div>");
-        newButton.attr("class", "w-2/4 h-full flex justify-center items-center bg-blue-300 rounded-bl");
+        newButton.attr("class", "removeSaveBtn w-2/4 h-full flex justify-center items-center bg-blue-300 rounded-bl");
+        newButton.attr("data-id", response.trails[i].id);
   
         var newIcon = $("<i>");
         newIcon.attr("class", "icon fas fa-heart-broken fa-2x");
@@ -217,6 +210,21 @@ $(document).on("click",".saveMaryPoppins", function() {
         
     })
   })
+  }
+  // ----Weather API for retrieving longitude and latitude and pass to hiking project api
+  function cityLocation(cityName, cityDistance) {
+    var locationAPIKey = "&appid=0888bb26c1d027c60cb2417244156801";
+    var locationURL = "https://api.openweathermap.org/data/2.5/weather?units=imperial&q=" + cityName + locationAPIKey;
+    $.ajax({
+      url: locationURL,
+      method: "GET"
+    }).then(function (response) {
+      var long = response.coord.lon;
+      var lat = response.coord.lat;
+      var temp = Math.round(response.main.temp)
+
+      getTrails(lat, long, cityDistance, temp); //passing longitude and latitude parameters to get trail results
+    })
   }
 
   // ----hiking project API
@@ -250,21 +258,13 @@ $(document).on("click",".saveMaryPoppins", function() {
     }
   })
 
-  // ----Weather API for retrieving longitude and latitude and pass to hiking project api
-  function cityLocation(cityName, cityDistance) {
-    var locationAPIKey = "&appid=0888bb26c1d027c60cb2417244156801";
-    var locationURL = "https://api.openweathermap.org/data/2.5/weather?units=imperial&q=" + cityName + locationAPIKey;
-    $.ajax({
-      url: locationURL,
-      method: "GET"
-    }).then(function (response) {
-      var long = response.coord.lon;
-      var lat = response.coord.lat;
-      var temp = Math.round(response.main.temp)
-
-      getTrails(lat, long, cityDistance, temp); //passing longitude and latitude parameters to get trail results
-    })
-  }
+  $(document).on("click",".saveMaryPoppins", function() {
+    if(!savedTrails.includes($(this).attr("data-id"))) {
+      savedTrails.push($(this).attr("data-id"));
+      localStorage.setItem("trails", savedTrails.toString());
+      console.log("https://www.hikingproject.com/data/get-trails-by-id?ids="+ localStorage.getItem("trails") +"&key=200758271-3165bfaa7d6b0bedfbf0fcdfbad4ec16");
+    }
+  })
 
 
   //If you click on the logo do another search
@@ -291,6 +291,12 @@ $(document).on("click",".saveMaryPoppins", function() {
     $("#savedPagesDiv").show();
     $("#explorerDiv").hide();
     $("#container").empty();
+    generateSaved();
+  })
+
+  $(document).on("click", ".removeSaveBtn", function() {
+    savedTrails.splice(savedTrails.indexOf($(this).attr("data-id")), 1);
+    localStorage.setItem("trails", JSON.stringify(savedTrails));
     generateSaved();
   })
 });
