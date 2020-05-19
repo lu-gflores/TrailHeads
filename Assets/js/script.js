@@ -42,9 +42,6 @@ $(document).ready(function () {
       var newCard = $("<div>").addClass("container flex flex-col items-center w-64 my-4");//trail card
       divRow.append(newCard);
       //image 
-
-
-
       if (response.trails[i].imgSmallMed === '') {
         $('#slide' + i).html('<img src= "https://via.placeholder.com/150" alt = "no image">')
       } else {
