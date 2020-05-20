@@ -47,7 +47,7 @@ $(document).ready(function () {
       var imgTag = $("<img>").addClass("w-full overflow-hidden h-64 overflow-hidden");
       if (response.trails[i].imgSmallMed === "") {
 
-       imgTag.attr("src", "https://via.placeholder.com/150", "alt", "no image");
+       imgTag.attr("src", "https://images.pexels.com/photos/1578750/pexels-photo-1578750.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500", "alt", "no image");
       
       } else {
         imgTag.attr("src", response.trails[i].imgSmallMed , "alt", response.trails[i].name);
