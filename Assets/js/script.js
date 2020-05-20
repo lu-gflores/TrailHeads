@@ -47,7 +47,7 @@ $(document).ready(function () {
       var imgTag = $("<img>").addClass("w-full overflow-hidden h-64 overflow-hidden");
       if (response.trails[i].imgSmallMed === "") {
 
-       imgTag.attr("src", "https://via.placeholder.com/150", "alt", "no image");
+       imgTag.attr("src", "https://images.pexels.com/photos/1578750/pexels-photo-1578750.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500", "alt", "no image");
       
       } else {
         imgTag.attr("src", response.trails[i].imgSmallMed , "alt", response.trails[i].name);
@@ -56,22 +56,12 @@ $(document).ready(function () {
       newCard.append(imgTag);
       //saved buttons
       var buttonRow = $("<div class= 'w-full h-16 bg-gray-300 flex flex-row'>")
-      var buttonContainer = $('<div class="w-2/4 h-full flex justify-center items-center bg-blue-300 rounded-bl">');
-      buttonRow.append(buttonContainer);
-      
-      var brokenHeart = $('<i class="icon fas fa-heart-broken fa-2x">');
 
-      var container2 = $('<div class="w-2/4 h-full flex justify-center items-center bg-red-500 rounded-br saveMaryPoppins">');
+      var container2 = $('<div class="w-full h-full flex justify-center items-center bg-red-500 rounded-br saveMaryPoppins">');
       container2.appendTo(buttonRow);
-      
-
       
       var heart =$('<i class="icon fas fa-heart fa-2x">');
       container2.attr("data-id", response.trails[i].id).append(heart);
-      
-      //console.log(response.trails[i]);
-      
-      buttonContainer.append(brokenHeart);
 
       var cardBackground = $("<div>").addClass("px-4 py-4 bg-white");
       //Trail Name
@@ -130,7 +120,7 @@ $(document).ready(function () {
         var h1El = $("<h1>");
         h1El.html("<br>No favorite trails found. Click <a href='#index.html'><u>here</u></a> to go find some!");
         h1El.attr("class", "text-center text-3xl");
-        $("header").append(h1El);
+        $("#container").append(h1El);
         return;
       }
   
@@ -141,30 +131,36 @@ $(document).ready(function () {
         //console.log($(this));
         console.log(response)
         // Step 1: Create a new div containing the entire card
+        var masterCard = $("<div>").addClass("container flex flex-col items-center w-64 my-4 mx-auto");
         var newCard = $("<div>");
-        newCard.attr("class", "max-w-sm rounded text-overflow shadow-lg");
+        newCard.attr("class", "max-w-sm rounded overflow-hidden shadow-lg mx-auto");
   
         // Step 2: Pull the stored image
         var newIconmg = $("<img>");
         newIconmg.attr("class", "w-full");
         newIconmg.attr("id", response.trails[i].url);
+
         if (response.trails[i].imgSmallMed === "") {
           newIconmg.attr("src", "https://images.pexels.com/photos/1578750/pexels-photo-1578750.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500");
           newIconmg.attr("alt", "Placeholder image");
-          newIconmg.attr("style", "width: 400px; height: 300px");
+          newIconmg.attr("class", "w-full overflow-hidden h-64 overflow-hidden rounded-t");
         }
         else {
-        newIconmg.attr("src", response.trails[i].imgSmallMed);
-        newIconmg.attr("alt", response.trails[i].location);
+          newIconmg.attr("src", response.trails[i].imgSmallMed);
+          newIconmg.attr("alt", response.trails[i].location);
+          newIconmg.attr("class", "w-full overflow-hidden h-64 overflow-hidden rounded-t");
         }
   
         // Step 3: Create a new div to contain everything else
         var newContents = $("<div>");
-        newContents.attr("class", "px-6 py-4");
+        newContents.attr("class", "max-w-sm rounded overflow-hidden shadow-lg");
+
+        var textDiv = $("<div>");
+        textDiv.addClass("px-6 py-4 bg-white");
   
         // Step 4: Create another new div to first contain the location
         var newLocation = $("<div>");
-        newLocation.attr("class", "font-bold text-xl mb-2");
+        newLocation.attr("class", "text-xl font-bold");
         newLocation.text(response.trails[i].name);
   
         // Step 5: Create a new p for summary
@@ -198,17 +194,19 @@ $(document).ready(function () {
         newMapIcon.attr("data-name", response.trails[i].name)
   
         // Final step: bring it all together
-        $("#container").append(newCard);
         $(newCard).append(newIconmg);
-        $(newCard).append(newContents);
-        $(newContents).append(newLocation);
-        $(newContents).append(newSummary);
-        $(newContents).append(newDifficulty);
+        $(textDiv).append(newLocation);
+        $(textDiv).append(newSummary);
+        $(textDiv).append(newDifficulty);
+        $(newContents).append(textDiv);
         $(newContents).append(newRow);
-        $(newRow).append(newButton);
         $(newButton).append(newIcon);
-        $(newRow).append(newMapButton);
+        $(newRow).append(newButton);
         $(newMapButton).append(newMapIcon);
+        $(newRow).append(newMapButton);
+        $(newCard).append(newContents);
+        $(masterCard).append(newCard);
+        $("#container").append(masterCard);
         
     })
   })
