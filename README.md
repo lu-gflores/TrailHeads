@@ -1,5 +1,7 @@
 # Trailheads
 
+Deployed Link: https://lu-gflores.github.io/TrailHeads/
+
 ## What is Trailheads?
 Trailheads is an application designed to help hikers and travelers find their ideal location for their next adventure. By inputting a city name, Trailheads locates and displays any nearby trails, national parks, mountains, etc. in the city area. 
 
