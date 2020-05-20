@@ -1,18 +1,21 @@
-# Trail Finder
+# Trailheads
 
-## What is Trail Finder?
-Trail Finder is an application designed to help hikers and travelers find their ideal location for their next adventure. By inputting a city name, Trail Finder locates and displays any nearby trails, national parks, mountains, etc. in the city area. 
+## What is Trailheads?
+Trailheads is an application designed to help hikers and travelers find their ideal location for their next adventure. By inputting a city name, Trailheads locates and displays any nearby trails, national parks, mountains, etc. in the city area. 
 
 
-![Image of the MainScreen](screenshot) <br/>
+![Image of the MainScreen](Assets/homePage.jpg) <br/>
+
+## Functionality
+After inputting a city name, it generates card slides of the trail names, image, and summary. Users can save trails by clicking the heart button and switching to the saved tab to display their saved trails and saves it the user's local storage. They can also delete a trail by unfavoriting and also deletes from their local storage.
+
 
 ## User Story 
  ```
 AS A hiker
-I WANT TO  
-SO THAT
+I WANT TO find a trail near an area
+SO THAT I can get a personalized workout physically and mentally
  ```
-
 
 
 ## Resources Used
